@@ -43,4 +43,22 @@ git merge rama       # Fusiona la rama especificada con la actual
 git pull             # Descarga y fusiona cambios del repositorio remoto
 git push             # Sube los cambios al repositorio remoto
 ```
-## 
+## Recordar actualizar el pip install
+python.exe -m pip install --upgrade pip
+
+# voy a usar un entorno virtual para instalar, ejecutar y desplegar los cambios 
+1. mi carpeta general o principal se llama tienda-sql, por lo que ubicamos la terminal en la tienda
+   con el comando cd tienda-sql
+
+2. inicializo el entorno virtual con:
+    python -m venv venv
+
+3. activo los scripts del entorno virtual
+    venv\Scripts\activate
+
+4. Instalar Flask y Livereload
+    pip install flask livereload
+
+5. guardamos dependencias:
+    pip freeze > requirements.txt
+
