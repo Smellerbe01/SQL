@@ -2,12 +2,42 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Tienda Básica la 14</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>Tienda Básica</title>
+  <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-  <h1>Bienvenido a la Tienda Básica</h1>
-  <p>Si ves este mensaje, Flask funciona ✅</p>
-  <p> si veo este mensaje, Flask funciona ✅</p>
+  <header>
+    <h1>Tienda Básica</h1>
+    <p>Compra tus productos favoritos de manera sencilla</p>
+  </header>
+
+  <main>
+    <section class="productos">
+      <div class="producto">
+        <h2>Producto 1</h2>
+        <p>Descripción corta del producto.</p>
+        <button>Comprar</button>
+      </div>
+      <div class="producto">
+        <h2>Producto 2</h2>
+        <p>Descripción corta del producto.</p>
+        <button>Comprar</button>
+      </div>
+      <div class="producto">
+        <h2>Producto 3</h2>
+        <p>Descripción corta del producto.</p>
+        <button>Comprar</button>
+      </div>
+      <div class="producto">
+        <h2>Producto 4</h2>
+        <p>Descripción corta del producto.</p>
+        <button>Comprar</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Tienda Básica. Todos los derechos reservados.</p>
+  </footer>
 </body>
 </html>

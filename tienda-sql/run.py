@@ -7,8 +7,8 @@ if __name__ == "__main__":
     server = Server(app.wsgi_app)
 
     # Vigilar cambios en templates y static
-    server.watch("app/templates/")
-    server.watch("app/static/")
+    server.watch('app/templates/')
+    server.watch('app/static/')
 
     # Iniciar servidor con recarga automática
-    server.serve(port=5000, debug=True)
+    server.serve(port=5000, host='127.0.0.1', debug=True)
