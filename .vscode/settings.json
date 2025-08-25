@@ -1,7 +1,12 @@
 {
     "cSpell.words": [
+        "livereload",
         "pycache",
+        "PYTHONPATH",
         "tiendita",
         "venv"
+    ],
+    "python.analysis.extraPaths": [
+        "./"
     ]
 }
