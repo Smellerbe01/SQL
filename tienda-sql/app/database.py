@@ -25,30 +25,6 @@ def init_db():
     conn = get_connection()
     cursor = conn.cursor()
 
-    # Crear tabla productos
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS productos (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre TEXT NOT NULL,
-            descripcion TEXT,
-            precio REAL NOT NULL
-        )
-    ''')
-
-    # Agregar productos de ejemplo si la tabla está vacía
-    cursor.execute("SELECT COUNT(*) FROM productos")
-    if cursor.fetchone()[0] == 0:
-        productos = [
-            ("Producto 1", "Descripción corta del producto 1", 10.99),
-            ("Producto 2", "Descripción corta del producto 2", 15.50),
-            ("Producto 3", "Descripción corta del producto 3", 7.25),
-            ("Producto 4", "Descripción corta del producto 4", 12.00)
-        ]
-        cursor.executemany(
-            "INSERT INTO productos (nombre, descripcion, precio) VALUES (?, ?, ?)",
-            productos
-        )
-
     conn.commit()
     conn.close()
 

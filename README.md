@@ -4,7 +4,7 @@ En este caso voy a crear una pagina web para una pequeña tienda
 en ella usare una base de datos sencilla 
 
 1. creare la estructura de la tienda
-### texto de prueba 
+
 ```bash
    tienda-sql/
 │
@@ -43,7 +43,7 @@ git checkout rama    # Cambia a la rama especificada
 git merge rama       # Fusiona la rama especificada con la actual
 git pull             # Descarga y fusiona cambios del repositorio remoto
 git push             # Sube los cambios al repositorio remoto
-```
+
 ## Recordar actualizar el pip install
 python.exe -m pip install --upgrade pip
 
@@ -63,3 +63,4 @@ python.exe -m pip install --upgrade pip
 5. guardamos dependencias:
     pip freeze > requirements.txt
 
+```

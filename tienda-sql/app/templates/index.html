@@ -20,11 +20,15 @@
       <p>{{ producto['descripcion'] }}</p>
       <p><strong>${{ producto['precio'] }}</strong></p>
       <button>Comprar</button>
+      <button>Agregar al carrito</button>
     </div>
     {% endfor %}
   </section>
+  
 </main>
-
+  <a href="{{ url_for('routes.cart') }}">
+    <button>Ver carrito 🛒</button>
+  </a>
   <footer>
     <p>© 2025 Tienda Básica. Todos los derechos reservados.</p>
   </footer>
