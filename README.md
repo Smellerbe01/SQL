@@ -4,6 +4,7 @@ En este caso voy a crear una pagina web para una pequeña tienda
 en ella usare una base de datos sencilla 
 
 1. creare la estructura de la tienda
+### texto de prueba 
 ```bash
    tienda-sql/
 │
