@@ -5,28 +5,28 @@ en ella usare una base de datos sencilla
 
 1. creare la estructura de la tienda
 
-    tienda-sql/
-│
-├── run.py                  # Punto de entrada (ejecuta la app con Livereload)
-│
-├── app/                    # Carpeta principal de la aplicación
-│   ├── __init__.py         # Crea la app Flask y conecta con la DB
-│   ├── routes.py           # Rutas y lógica de la tienda
-│   │
-│   ├── templates/          # Archivos HTML (Jinja2 templates)
-│   │   └── index.html
-│   │
-│   ├── static/             # Archivos estáticos (CSS, imágenes, JS)
-│   │   └── style.css
-│   │
-│   └── __pycache__/        # Archivos temporales (se generan solos)
-│
-├── instance/               # Carpeta para la DB y configs locales
-│   └── tienda.db           # Base de datos SQLite
-│
-├── venv/                   # Entorno virtual de Python
-│
-└── requirements.txt        # Lista de dependencias (Flask, livereload, etc.)
+*    tienda-sql/
+* │
+* ├── run.py                  # Punto de entrada (ejecuta la app con Livereload)
+* │
+* ├── app/                    # Carpeta principal de la aplicación
+* │   ├── __init__.py         # Crea la app Flask y conecta con la DB
+* │   ├── routes.py           # Rutas y lógica de la tienda
+* │   │
+* │   ├── templates/          # Archivos HTML (Jinja2 templates)
+* │   │   └── index.html
+* │   │
+* │   ├── static/             # Archivos estáticos (CSS, imágenes, JS)
+* │   │   └── style.css
+* │   │
+* │   └── __pycache__/        # Archivos temporales (se generan solos)
+* │
+* ├── instance/               # Carpeta para la DB y configs locales
+* │   └── tienda.db           # Base de datos SQLite
+* │
+* ├── venv/                   # Entorno virtual de Python
+* │
+* └── requirements.txt        # Lista de dependencias (Flask, livereload, etc.)
 
 
 ## Comandos básicos de Git
