@@ -2,14 +2,41 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carrito de Compras</title>
+  
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  
+  <style>
+    table {
+      width: 80%;
+      margin: auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 10px;
+      text-align: center;
+    }
+    button {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    h1, h3 {
+      text-align: center;
+    }
+    a {
+      display: inline-block;
+      margin: 10px;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
   <h1>🛒 Carrito de Compras</h1>
-
+<h2>Productos disponibles</h2>
   {% if carrito %}
-    <table border="1" cellpadding="10" cellspacing="0" style="margin: auto; text-align: center;">
+    <table>
       <thead>
         <tr>
           <th>Producto</th>
@@ -36,23 +63,26 @@
       </tbody>
     </table>
 
-    <h2>Total: ${{ total }}</h2>
+    <h3>Total: ${{ total }}</h3>
 
     <!-- Vaciar carrito -->
-    <a href="{{ url_for('routes.clear_cart') }}">
-      <button>🗑 Vaciar carrito</button>
-    </a>
-
-    <!-- Volver a tienda -->
-    <a href="{{ url_for('routes.index') }}">
-      <button>⬅ Seguir comprando</button>
-    </a>
+    <div style="text-align: center;">
+      <a href="{{ url_for('routes.clear_cart') }}">
+        <button>🗑 Vaciar carrito</button>
+      </a>
+      <a href="{{ url_for('routes.index') }}">
+        <button>⬅ Seguir comprando</button>
+      </a>
+    </div>
 
   {% else %}
-    <p>El carrito está vacío.</p>
-    <a href="{{ url_for('routes.index') }}">
-      <button>⬅ Volver a la tienda</button>
-    </a>
+    <p style="text-align: center;">Tu carrito está vacío.</p>
+    <div style="text-align: center;">
+      <a href="{{ url_for('routes.index') }}">
+        <button>⬅ Volver a la tienda</button>
+      </a>
+    </div>
   {% endif %}
+
 </body>
 </html>
