@@ -2,51 +2,149 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Carrito de Compras</title>
+    <title>🛒 Carrito de Compras</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #333; }
-        table { width: 60%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
-        th { background-color: #f2f2f2; }
-        .btn { padding: 8px 12px; text-decoration: none; background: #007BFF; color: white; border-radius: 5px; }
-        .btn:hover { background: #0056b3; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #0d6efd;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .cart-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:not(:last-child) {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #084298;
+            transform: scale(1.05);
+        }
+
+        .btn-red {
+            background-color: #dc3545;
+        }
+
+        .btn-red:hover {
+            background-color: #a71d2a;
+        }
+
+        .total {
+            margin-top: 20px;
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 30px;
+        }
+
+        .cart-actions {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .cart-actions a {
+            margin-left: 10px;
+        }
+
+        img.product-img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
     </style>
 </head>
 <body>
     <h1>🛒 Carrito de Compras</h1>
-
-    {% if cart and cart|length > 0 %}
+    <div class="cart-container">
+        {% if cart and cart|length > 0 %}
         <table>
-    <tr>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Cantidad</th>
-        <th>Subtotal</th>
-        <th>Acción</th>
-    </tr>
-    {% for item in cart %}
-    <tr>
-        <td>{{ item["nombre"] }}</td>
-        <td>${{ item["precio"] }}</td>
-        <td>{{ session["cart"].count(item["producto_id"]) }}</td>
-        <td>${{ item["precio"] * session["cart"].count(item["producto_id"]) }}</td>
-        <td>
-            <a href="{{ url_for('routes.remove_from_cart', producto_id=item['producto_id']) }}" style="color:red;">
-                🗑️ Eliminar
-            </a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+            <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Acciones</th>
+            </tr>
+            {% for item in cart %}
+            <tr>
+                <td>
+                    {% if item['imagen'] %}
+                    <img src="{{ item['imagen'] }}" alt="{{ item['nombre'] }}" class="product-img">
+                    {% endif %}
+                </td>
+                <td>{{ item['nombre'] }}</td>
+                <td>${{ item['precio'] }}</td>
+                <td>{{ item['cantidad'] if item['cantidad'] else 1 }}</td>
+                <td>${{ (item['precio'] * (item['cantidad'] if item['cantidad'] else 1))|round(2) }}</td>
+                <td>
+                    <a href="{{ url_for('routes.remove_from_cart', producto_id=item['producto_id']) }}" class="btn btn-red">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
 
-        <p>
-            <a href="{{ url_for('routes.clear_cart') }}" class="btn">Vaciar Carrito</a>
+        <div class="total">
+            Total: ${{ total|round(2) }}
+        </div>
+
+        <div class="cart-actions">
+            <a href="{{ url_for('routes.clear_cart') }}" class="btn btn-red">Vaciar Carrito</a>
             <a href="{{ url_for('routes.index') }}" class="btn">Seguir Comprando</a>
-        </p>
-    {% else %}
-        <p>El carrito está vacío.</p>
-        <a href="{{ url_for('routes.index') }}" class="btn">Ir a Productos</a>
-    {% endif %}
+        </div>
+        {% else %}
+        <div class="empty-cart">
+            <p>Tu carrito está vacío.</p>
+            <a href="{{ url_for('routes.index') }}" class="btn">Ver Productos</a>
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>

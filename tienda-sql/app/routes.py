@@ -17,21 +17,34 @@ def index():
 # Página del carrito
 @routes.route("/cart")
 def cart():
-    # Recuperar IDs del carrito en sesión
     cart_items = session.get("cart", [])
 
-    if not cart_items:
-        return render_template("cart.html", cart=[])
+    productos_cart = []
+    total = 0
 
-    # Traer productos de la BD que estén en el carrito
-    conn = get_connection()
-    cursor = conn.cursor()
-    placeholders = ",".join("?" * len(cart_items))  # genera ?,?,? según los IDs
-    cursor.execute(f"SELECT * FROM productos WHERE producto_id IN ({placeholders})", cart_items)
-    productos = cursor.fetchall()
-    conn.close()
+    if cart_items:
+        conn = get_connection()
+        cursor = conn.cursor()
 
-    return render_template("cart.html", cart=productos)
+        placeholders = ",".join("?" * len(cart_items))
+        cursor.execute(f"SELECT * FROM productos WHERE producto_id IN ({placeholders})", cart_items)
+        productos = cursor.fetchall()
+
+        for producto in productos:
+            cantidad = cart_items.count(producto["producto_id"])
+            subtotal = producto["precio"] * cantidad
+            total += subtotal
+            productos_cart.append({
+                "producto_id": producto["producto_id"],
+                "nombre": producto["nombre"],
+                "precio": producto["precio"],
+                "cantidad": cantidad,
+                "imagen": None  # No hay columna, ponemos None
+            })
+        conn.close()
+
+    return render_template("cart.html", cart=productos_cart, total=total)
+
 
 # Agregar producto al carrito (sin abrir carrito)
 @routes.route("/add_to_cart/<int:producto_id>")

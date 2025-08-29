@@ -4,54 +4,148 @@
     <meta charset="UTF-8">
     <title>Tienda SQL</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #333; }
-        table { width: 80%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
-        th { background-color: #f2f2f2; }
-        .btn { padding: 6px 10px; text-decoration: none; background: #28a745; color: white; border-radius: 5px; font-size: 14px; }
-        .btn:hover { background: #1e7e34; }
-        .cart-link { margin-top: 20px; display: inline-block; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f0f2f5; 
+            margin: 0; 
+            padding: 20px; 
+        }
+
+        h1 { color: #0d6efd; text-align: center; margin-bottom: 10px; }
+        h2 { text-align: center; margin-bottom: 30px; color: #333; }
+
+        .productos { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; }
+
+        .producto {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 220px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .producto:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+
+        .producto img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .producto h3 { margin: 10px 0; font-size: 1.2em; }
+        .precio { font-weight: bold; color: #28a745; margin: 5px 0; }
+
+        .stock-bar { height: 12px; border-radius: 6px; background-color: #e0e0e0; margin: 10px 0; overflow: hidden; }
+        .stock-fill { height: 100%; border-radius: 6px; transition: width 0.3s; }
+        .stock-fill.alto { background-color: green; }
+        .stock-fill.medio { background-color: orange; }
+        .stock-fill.bajo { background-color: red; }
+
+        .btn {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-block;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:hover { background-color: #084298; transform: scale(1.05); }
+
+        .plus-one {
+            position: absolute;
+            top: -20px;
+            right: 10px;
+            font-weight: bold;
+            color: #ffc107;
+            animation: moveUp 1s ease-out forwards;
+        }
+        @keyframes moveUp { 0% { opacity:1; transform: translateY(0);} 100% { opacity:0; transform: translateY(-20px);} }
+
+        .cart-link {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .cart-count {
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        .agotado { color: red; font-weight: bold; }
     </style>
 </head>
 <body>
     <h1>Tienda SQL</h1>
-    <h2>🛍️ Lista de Productos agregados  </h1>
+    <h2>🛍️ Lista de Productos</h2>
 
+    <!-- Carrito flotante -->
+    <a href="{{ url_for('routes.cart') }}" class="cart-link">
+        🛒
+        <span class="cart-count">{{ session.get('cart')|length if session.get('cart') else 0 }}</span>
+    </a>
 
-    {% if productos and productos|length > 0 %}
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Stock</th>
-                <th>Acciones</th>
-            </tr>
-            {% for producto in productos %}
-            <tr>
-                <td>{{ producto["producto_id"] }}</td>
-                <td>{{ producto["nombre"] }}</td>
-                <td>${{ producto["precio"] }}</td>
-                <td>{{ producto["stock"] }}</td>
-                <td>
-                  {% if producto["stock"] > 0 %}
-            <a href="{{ url_for('routes.add_to_cart', producto_id=producto['producto_id']) }}" class="btn">
+    <div class="productos">
+        {% for producto in productos %}
+        <div class="producto">
+            <!-- Imagen opcional -->
+            {% if producto['imagen'] %}
+            <img src="{{ producto['imagen'] }}" alt="{{ producto['nombre'] }}">
+            {% endif %}
+
+            <h3>{{ producto['nombre'] }}</h3>
+            <p class="precio">${{ producto['precio'] }}</p>
+
+            <!-- Barra de stock -->
+            <div class="stock-bar">
+                <div class="stock-fill 
+                    {% if producto['stock'] <= 2 %}bajo
+                    {% elif producto['stock'] <= 5 %}medio
+                    {% else %}alto{% endif %}"
+                    style="width: {{ (producto['stock'] / 10) * 100 }}%">
+                </div>
+            </div>
+            <small>Stock: {{ producto['stock'] }}</small>
+
+            {% if producto["stock"] > 0 %}
+            <a href="{{ url_for('routes.add_to_cart', producto_id=producto['producto_id']) }}" class="btn" onclick="showPlusOne(this)">
                 ➕ Agregar al carrito
             </a>
             {% else %}
-            <span style="color:red; font-weight:bold;">Agotado</span>
+            <span class="agotado">Agotado</span>
             {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        <p>No hay productos disponibles.</p>
-    {% endif %}
-
-    <div class="cart-link">
-        <a href="{{ url_for('routes.cart') }}" class="btn" style="background:#007BFF;">🛒 Ver Carrito</a>
+        </div>
+        {% endfor %}
     </div>
+
+    <script>
+        function showPlusOne(button) {
+            const plus = document.createElement('span');
+            plus.className = 'plus-one';
+            plus.innerText = '+1';
+            button.appendChild(plus);
+            setTimeout(() => plus.remove(), 1000);
+        }
+    </script>
 </body>
 </html>
