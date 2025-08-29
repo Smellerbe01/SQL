@@ -18,12 +18,14 @@
     <h1>Tienda SQL</h1>
     <h2>🛍️ Lista de Productos agregados  </h1>
 
+
     {% if productos and productos|length > 0 %}
         <table>
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Precio</th>
+                <th>Stock</th>
                 <th>Acciones</th>
             </tr>
             {% for producto in productos %}
@@ -31,10 +33,15 @@
                 <td>{{ producto["producto_id"] }}</td>
                 <td>{{ producto["nombre"] }}</td>
                 <td>${{ producto["precio"] }}</td>
+                <td>{{ producto["stock"] }}</td>
                 <td>
-                    <a href="{{ url_for('routes.add_to_cart', producto_id=producto['producto_id']) }}" class="btn">
-                        ➕ Agregar al carrito
-                    </a>
+                  {% if producto["stock"] > 0 %}
+            <a href="{{ url_for('routes.add_to_cart', producto_id=producto['producto_id']) }}" class="btn">
+                ➕ Agregar al carrito
+            </a>
+            {% else %}
+            <span style="color:red; font-weight:bold;">Agotado</span>
+            {% endif %}
                 </td>
             </tr>
             {% endfor %}

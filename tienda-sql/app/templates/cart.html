@@ -18,19 +18,27 @@
 
     {% if cart and cart|length > 0 %}
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Precio</th>
-            </tr>
-            {% for producto in cart %}
-            <tr>
-                <td>{{ producto["producto_id"] }}</td>
-                <td>{{ producto["nombre"] }}</td>
-                <td>${{ producto["precio"] }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+    <tr>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Subtotal</th>
+        <th>Acción</th>
+    </tr>
+    {% for item in cart %}
+    <tr>
+        <td>{{ item["nombre"] }}</td>
+        <td>${{ item["precio"] }}</td>
+        <td>{{ session["cart"].count(item["producto_id"]) }}</td>
+        <td>${{ item["precio"] * session["cart"].count(item["producto_id"]) }}</td>
+        <td>
+            <a href="{{ url_for('routes.remove_from_cart', producto_id=item['producto_id']) }}" style="color:red;">
+                🗑️ Eliminar
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 
         <p>
             <a href="{{ url_for('routes.clear_cart') }}" class="btn">Vaciar Carrito</a>

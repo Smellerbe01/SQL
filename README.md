@@ -1,7 +1,9 @@
 # SQL
+
 casos de practica de SQL
-En este caso voy a crear una pagina web para una pequeña tienda 
-en ella usare una base de datos sencilla 
+
+En este caso voy a crear una pagina web para una pequeña tienda
+en ella usare una base de datos sencilla
 
 1. creare la estructura de la tienda
 
@@ -82,28 +84,6 @@ python.exe -m pip install --upgrade pip
     pip freeze > requirements.txt
     ```
 
-# Estructura de carpetas y archivos del proyecto
-
-SQL/
-├── tienda-sql/
-│   ├── app/
-│   │   ├── __init__.py
-│   │   ├── routes.py
-│   │   ├── static/
-│   │   │   └── style.css
-│   │   ├── templates/
-│   │   │   └── index.html
-
-│   │   └── __pycache__/
-│   ├── instance/
-│   │   └── tienda.db
-│   ├── scripts/
-│   │   └── seed.sql
-|   |   |__ schema.sql
-│   ├── run.py
-│   ├── requirements.txt
-│   └── venv/
-└── README.md
 
 
 
