@@ -1,35 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Tienda Básica</title>
-  <link rel="stylesheet" href="../static/style.css">
+    <meta charset="UTF-8">
+    <title>Tienda SQL</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        table { width: 80%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .btn { padding: 6px 10px; text-decoration: none; background: #28a745; color: white; border-radius: 5px; font-size: 14px; }
+        .btn:hover { background: #1e7e34; }
+        .cart-link { margin-top: 20px; display: inline-block; }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Tienda Básica la 14</h1>
-    <p>Compra tus productos favoritos de manera sencilla</p>
-    <p>¡Bienvenido a nuestra tienda online!</p>
-  </header>
+    <h1>Tienda SQL 2s2</h1>
+    <h2>🛍️ Lista de Productos agregados  </h1>
 
- <main>
-  <section class="productos">
-    {% for producto in productos %}
-    <div class="producto">
-      <h2>{{ producto['nombre'] }}</h2>
-      <p>{{ producto['descripcion'] }}</p>
-      <p><strong>${{ producto['precio'] }}</strong></p>
-    
-      <button>Comprar</button>
-      <button>Agregar al carrito</button>
+    {% if productos and productos|length > 0 %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto["producto_id"] }}</td>
+                <td>{{ producto["nombre"] }}</td>
+                <td>${{ producto["precio"] }}</td>
+                <td>
+                    <a href="{{ url_for('routes.add_to_cart', producto_id=producto['producto_id']) }}" class="btn">
+                        ➕ Agregar al carrito
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No hay productos disponibles.</p>
+    {% endif %}
+
+    <div class="cart-link">
+        <a href="{{ url_for('routes.cart') }}" class="btn" style="background:#007BFF;">🛒 Ver Carrito</a>
     </div>
-    {% endfor %}
-  </section>
-  
-</main>
-  <a href="{{ url_for('routes.cart') }}">🛒 Ver Carrito</a>
-  <footer>
-    <p>© 2025 Tienda Básica. Todos los derechos reservados.</p>
-  </footer>
 </body>
 </html>

@@ -63,4 +63,48 @@ python.exe -m pip install --upgrade pip
 5. guardamos dependencias:
     pip freeze > requirements.txt
 
-```
+    ```
+    # Comandos para trabajar con el entorno virtual
+
+    # 1. Ubica la terminal en la carpeta principal del proyecto
+    cd tienda-sql
+
+    # 2. Inicializa el entorno virtual
+    python -m venv venv
+
+    # 3. Activa el entorno virtual
+    venv\Scripts\activate  # En Windows
+
+    # 4. Instala Flask y Livereload
+    pip install flask livereload
+
+    # 5. Guarda las dependencias instaladas
+    pip freeze > requirements.txt
+    ```
+
+# Estructura de carpetas y archivos del proyecto
+
+SQL/
+├── tienda-sql/
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── routes.py
+│   │   ├── static/
+│   │   │   └── style.css
+│   │   ├── templates/
+│   │   │   └── index.html
+
+│   │   └── __pycache__/
+│   ├── instance/
+│   │   └── tienda.db
+│   ├── scripts/
+│   │   └── seed.sql
+|   |   |__ schema.sql
+│   ├── run.py
+│   ├── requirements.txt
+│   └── venv/
+└── README.md
+
+
+
+

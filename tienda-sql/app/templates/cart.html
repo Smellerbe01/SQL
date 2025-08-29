@@ -1,78 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carrito de Compras</title>
-  
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  
-  <style>
-    table {
-      width: 80%;
-      margin: auto;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #333;
-      padding: 10px;
-      text-align: center;
-    }
-    button {
-      padding: 5px 10px;
-      cursor: pointer;
-    }
-    h1, h3 {
-      text-align: center;
-    }
-    a {
-      display: inline-block;
-      margin: 10px;
-      text-decoration: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        table { width: 60%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .btn { padding: 8px 12px; text-decoration: none; background: #007BFF; color: white; border-radius: 5px; }
+        .btn:hover { background: #0056b3; }
+    </style>
 </head>
 <body>
-  <h1>🛒 Carrito de Compras</h1>
-<h2>Productos Agregados </h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-          <th>Subtotal</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in carrito %}
-          <tr>
-            <td>{{ item['nombre'] }}</td>
-            <td>${{ item['precio'] }}</td>
-            <td>{{ item['cantidad'] }}</td>
-            <td>${{ item['subtotal'] }}</td>
-            <td>
-              <a href="{{ url_for('routes.remove_from_cart', producto_id=item['id']) }}">
-                <button>❌ Eliminar</button>
-              </a>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <h1>🛒 Carrito de Compras</h1>
 
-        <h3>Total: ${{ total }}</h3>
+    {% if cart and cart|length > 0 %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+            </tr>
+            {% for producto in cart %}
+            <tr>
+                <td>{{ producto["producto_id"] }}</td>
+                <td>{{ producto["nombre"] }}</td>
+                <td>${{ producto["precio"] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
 
-        <div style="text-align: center;">
-          <a href="{{url_for('routes.clear_cart')}}">
-            <button> Vaciar carrito </button>
-          </a>
-          <a href="{{url_for('routes.index')}}">
-            <button> Seguir comprando</button>
-          </a>
-        </div>
-  
-    
+        <p>
+            <a href="{{ url_for('routes.clear_cart') }}" class="btn">Vaciar Carrito</a>
+            <a href="{{ url_for('routes.index') }}" class="btn">Seguir Comprando</a>
+        </p>
+    {% else %}
+        <p>El carrito está vacío.</p>
+        <a href="{{ url_for('routes.index') }}" class="btn">Ir a Productos</a>
+    {% endif %}
 </body>
 </html>
