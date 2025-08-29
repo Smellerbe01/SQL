@@ -34,8 +34,7 @@
 </head>
 <body>
   <h1>🛒 Carrito de Compras</h1>
-<h2>Productos disponibles</h2>
-  {% if carrito %}
+<h2>Productos Agregados </h2>
     <table>
       <thead>
         <tr>
@@ -63,26 +62,17 @@
       </tbody>
     </table>
 
-    <h3>Total: ${{ total }}</h3>
+        <h3>Total: ${{ total }}</h3>
 
-    <!-- Vaciar carrito -->
-    <div style="text-align: center;">
-      <a href="{{ url_for('routes.clear_cart') }}">
-        <button>🗑 Vaciar carrito</button>
-      </a>
-      <a href="{{ url_for('routes.index') }}">
-        <button>⬅ Seguir comprando</button>
-      </a>
-    </div>
-
-  {% else %}
-    <p style="text-align: center;">Tu carrito está vacío.</p>
-    <div style="text-align: center;">
-      <a href="{{ url_for('routes.index') }}">
-        <button>⬅ Volver a la tienda</button>
-      </a>
-    </div>
-  {% endif %}
-
+        <div style="text-align: center;">
+          <a href="{{url_for('routes.clear_cart')}}">
+            <button> Vaciar carrito </button>
+          </a>
+          <a href="{{url_for('routes.index')}}">
+            <button> Seguir comprando</button>
+          </a>
+        </div>
+  
+    
 </body>
 </html>

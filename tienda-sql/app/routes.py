@@ -78,3 +78,8 @@ def remove_from_cart(producto_id):
 def clear_cart():
     session.pop("cart", None)
     return redirect(url_for("routes.cart"))
+
+#--------------------------
+# compra directa 
+#--------------------------
+
